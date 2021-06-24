@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerAimWeapon : MonoBehaviour
+public class PlayerAimWeapon : MonoBehaviourPunCallbacks
 {
     public Transform playerTransform;
 
@@ -25,6 +26,8 @@ public class PlayerAimWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine) return;
+
         mousePos = Input.mousePosition;
         gunPos = cam.WorldToScreenPoint(transform.position);
         mousePos.x = mousePos.x - gunPos.x;
