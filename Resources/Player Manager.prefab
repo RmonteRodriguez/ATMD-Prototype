@@ -238,11 +238,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5783069675649360657}
   - component: {fileID: 177870387310463965}
+  - component: {fileID: 7672187601511314549}
   - component: {fileID: 6409606422365228235}
   - component: {fileID: 5336640343470498687}
   - component: {fileID: 2684722722012954006}
   m_Layer: 0
-  m_Name: Pistol Sprite
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,7 +259,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.648, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8891698039065529094}
   m_Father: {fileID: 4639364964208793222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -313,6 +315,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7672187601511314549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252851571178576461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3819546c876f54a91feeebea5536fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4464100316960872114, guid: 8e16f235b7de165419340c8904299d4c, type: 3}
+  firePoint: {fileID: 8891698039065529094}
+  bulletForce: 20
+  fireRate: 0.3
+  canShoot: 1
+  clipSizeStart: 5
+  baseReloadTime: 2
 --- !u!114 &6409606422365228235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +491,7 @@ MonoBehaviour:
   rb: {fileID: 6529019549013202383}
   cameraParent: {fileID: 810400838645585164}
   moveSpeed: 7
-  maxHealth: 0
+  maxHealth: 10
   currentHealth: 0
 --- !u!114 &4573358273182491500
 MonoBehaviour:
@@ -623,4 +644,34 @@ Transform:
   - {fileID: 6529019550439735062}
   m_Father: {fileID: 6529019549013202381}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8527914286911487494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8891698039065529094}
+  m_Layer: 0
+  m_Name: Fire Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8891698039065529094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8527914286911487494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.269, y: 0.037, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5783069675649360657}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
