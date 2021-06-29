@@ -54,6 +54,16 @@ public class Player : MonoBehaviourPunCallbacks
         {
             photonView.RPC("PistolDamage", RpcTarget.All);
         }
+
+        if (collision.gameObject.tag == "SniperBullet")
+        {
+            photonView.RPC("SniperDamage", RpcTarget.All);
+        }
+
+        if (collision.gameObject.tag == "RifleBullet")
+        {
+            photonView.RPC("RifleDamage", RpcTarget.All);
+        }
     }
 
     //Guns Damage
@@ -61,6 +71,18 @@ public class Player : MonoBehaviourPunCallbacks
     public void PistolDamage()
     {
         currentHealth = currentHealth - 2f;
+    }
+
+    [PunRPC]
+    public void SniperDamage()
+    {
+        currentHealth = currentHealth - 25f;
+    }
+
+    [PunRPC]
+    public void RifleDamage()
+    {
+        currentHealth = currentHealth - 5f;
     }
 
     public void Death()
