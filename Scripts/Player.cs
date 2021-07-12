@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class Player : MonoBehaviourPunCallbacks
@@ -17,19 +18,31 @@ public class Player : MonoBehaviourPunCallbacks
     public float maxHealth;
     public float currentHealth;
 
+    //UI
+    private Transform UIHealthbar;
+    private Text healthbarText;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (!photonView.IsMine) return;
+
+        UIHealthbar = GameObject.Find("HUD/Health/Bar").transform;
+        healthbarText = GameObject.Find("HUD/Health/Text").GetComponent<Text>();
+
         cameraParent.SetActive(photonView.IsMine);
         manager = GameObject.Find("Game Manager").GetComponent<Manager>();
 
         currentHealth = maxHealth;
+        photonView.RPC("RefreshHealthBar", RpcTarget.All);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!photonView.IsMine) return;
+
+        healthbarText.text = currentHealth.ToString();
 
         if (currentHealth <= 0)
         {
@@ -66,23 +79,36 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void RefreshHealthBar()
+    {
+        float t_healthRatio = currentHealth / maxHealth;
+        UIHealthbar.localScale = new Vector3(t_healthRatio, 1, 1);
+    }
+
     //Guns Damage
     [PunRPC]
     public void PistolDamage()
     {
         currentHealth = currentHealth - 2f;
+
+        photonView.RPC("RefreshHealthBar", RpcTarget.All);
     }
 
     [PunRPC]
     public void SniperDamage()
     {
         currentHealth = currentHealth - 25f;
+
+        photonView.RPC("RefreshHealthBar", RpcTarget.All);
     }
 
     [PunRPC]
     public void RifleDamage()
     {
         currentHealth = currentHealth - 5f;
+
+        photonView.RPC("RefreshHealthBar", RpcTarget.All);
     }
 
     public void Death()
