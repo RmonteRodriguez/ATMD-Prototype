@@ -93,6 +93,7 @@ public class Player : MonoBehaviourPunCallbacks
         currentHealth = currentHealth - 2f;
 
         photonView.RPC("RefreshHealthBar", RpcTarget.All);
+        CameraShake.Instance.ShakeCamera(.1f, .1f);
     }
 
     [PunRPC]
@@ -101,6 +102,7 @@ public class Player : MonoBehaviourPunCallbacks
         currentHealth = currentHealth - 25f;
 
         photonView.RPC("RefreshHealthBar", RpcTarget.All);
+        CameraShake.Instance.ShakeCamera(.1f, .1f);
     }
 
     [PunRPC]
@@ -109,6 +111,7 @@ public class Player : MonoBehaviourPunCallbacks
         currentHealth = currentHealth - 5f;
 
         photonView.RPC("RefreshHealthBar", RpcTarget.All);
+        CameraShake.Instance.ShakeCamera(.1f, .1f);
     }
 
     public void Death()

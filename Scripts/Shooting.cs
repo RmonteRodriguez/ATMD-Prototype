@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class Shooting : MonoBehaviourPunCallbacks
@@ -20,10 +21,18 @@ public class Shooting : MonoBehaviourPunCallbacks
     public float baseReloadTime;
     private float reloadTime;
 
+    //Ammo UI
+    public Text ammoText;
+
     // Start is called before the first frame update
     void Start()
     {
         currentClipSize = clipSizeStart;
+
+        if (photonView.IsMine)
+        {
+            ammoText = GameObject.Find("HUD/Ammo/Text").GetComponent<Text>();
+        }
     }
 
     // Update is called once per frame
@@ -63,6 +72,8 @@ public class Shooting : MonoBehaviourPunCallbacks
         {
             photonView.RPC("Reload", RpcTarget.All);
         }
+
+        ammoText.text = (int)currentClipSize + " / " + (int)clipSizeStart;
     }
 
     [PunRPC]
@@ -72,7 +83,6 @@ public class Shooting : MonoBehaviourPunCallbacks
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
         currentClipSize--;
-        Debug.Log(currentClipSize);
     }
 
     [PunRPC]
