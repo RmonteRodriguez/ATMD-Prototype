@@ -39,6 +39,7 @@ public class Shooting : MonoBehaviourPunCallbacks
     void Update()
     {
         if (!photonView.IsMine) return;
+        if (Pause.paused) return;
 
         if (currentClipSize < 1)
         {

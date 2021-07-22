@@ -52,6 +52,19 @@ public class Player : MonoBehaviourPunCallbacks
         //Controls
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        bool pause = Input.GetKeyDown(KeyCode.Escape);
+
+        //Pause
+        if (pause)
+        {
+            GameObject.Find("Pause").GetComponent<Pause>().TogglePause();
+        }
+
+        if (Pause.paused)
+        {
+            movement.x = 0f;
+            movement.y = 0f;
+        }
     }
 
     void FixedUpdate()
