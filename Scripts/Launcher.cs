@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
+[System.Serializable]
 public class ProfileData
 {
     public string username;
@@ -19,6 +20,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     public void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
+        myProfile = Data.LoadProfile();
+        usernameField.text = myProfile.username;
+
         Connect();
     }
 
@@ -74,6 +79,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         if(PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
+            Data.SaveProfile(myProfile);
             PhotonNetwork.LoadLevel(1);
         }
     }
