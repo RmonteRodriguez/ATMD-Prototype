@@ -21,14 +21,18 @@ public class Player : MonoBehaviourPunCallbacks
     //UI
     private Transform UIHealthbar;
     private Text healthbarText;
+    private Text UIUsername;
 
     // Start is called before the first frame update
     void Start()
     {
         if (!photonView.IsMine) return;
 
+        //UI
         UIHealthbar = GameObject.Find("HUD/Health/Bar").transform;
         healthbarText = GameObject.Find("HUD/Health/Text").GetComponent<Text>();
+        UIUsername = GameObject.Find("HUD/Username/Text").GetComponent<Text>();
+        UIUsername.text = Launcher.myProfile.username;
 
         cameraParent.SetActive(photonView.IsMine);
         manager = GameObject.Find("Game Manager").GetComponent<Manager>();
