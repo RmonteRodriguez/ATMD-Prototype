@@ -28,6 +28,11 @@ public class Player : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) return;
 
+        if (Pause.paused == true)
+        {
+            GameObject.Find("Pause").GetComponent<Pause>().TogglePause();
+        }
+
         //UI
         UIHealthbar = GameObject.Find("HUD/Health/Bar").transform;
         healthbarText = GameObject.Find("HUD/Health/Text").GetComponent<Text>();

@@ -129,6 +129,12 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(t_roomName);
     }
 
+    public void RefreshRoomList()
+    {
+        PhotonNetwork.Disconnect();
+        Connect();
+    }
+
     public void StartGame()
     {
         if(string.IsNullOrEmpty(usernameField.text))
