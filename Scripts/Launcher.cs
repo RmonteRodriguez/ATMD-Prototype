@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 [System.Serializable]
 public class ProfileData
@@ -17,6 +18,13 @@ public class Launcher : MonoBehaviourPunCallbacks
     public InputField usernameField;
     public static ProfileData myProfile = new ProfileData();
 
+    public GameObject mainMenu;
+    public GameObject roomMenu;
+
+    public GameObject buttonRoom;
+
+    private List<RoomInfo> roomList;
+
     public void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -30,8 +38,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected");
-        //Join();
 
+        PhotonNetwork.JoinLobby();
         base.OnConnectedToMaster();
     }
 
@@ -63,7 +71,62 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void Create()
     {
-        PhotonNetwork.CreateRoom("");
+        RoomOptions options = new RoomOptions();
+        options.MaxPlayers = 8;
+
+        PhotonNetwork.CreateRoom("", options);
+    }
+
+    public void CloseAllWindows()
+    {
+        mainMenu.SetActive(false);
+        roomMenu.SetActive(false);
+    }
+
+    public void OpenMainMenu()
+    {
+        CloseAllWindows();
+        mainMenu.SetActive(true);
+    }
+
+    public void OpenRoomList()
+    {
+        CloseAllWindows();
+        roomMenu.SetActive(true);
+    }
+
+    private void ClearRoomList()
+    {
+        Transform content = roomMenu.transform.Find("Scroll View/Viewport/Content");
+        foreach (Transform a in content) Destroy(a.gameObject);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> p_list)
+    {
+        roomList = p_list;
+        ClearRoomList();
+
+        Debug.Log("Loaded Rooms @ " + Time.time);
+        Transform content = roomMenu.transform.Find("Scroll View/Viewport/Content");
+
+        foreach(RoomInfo a in roomList)
+        {
+            GameObject newRoomButton = Instantiate(buttonRoom, content) as GameObject;
+
+            newRoomButton.transform.Find("Name").GetComponent<Text>().text = a.Name;
+            newRoomButton.transform.Find("Players").GetComponent<Text>().text = a.PlayerCount + " / " + a.MaxPlayers;
+
+            newRoomButton.GetComponent<Button>().onClick.AddListener(delegate { JoinRoom(newRoomButton.transform); });
+        }
+
+        base.OnRoomListUpdate(roomList);
+    }
+
+    public void JoinRoom(Transform p_button)
+    {
+        Debug.Log("Joing Room @ " + Time.time);
+        string t_roomName = p_button.transform.Find("Name").GetComponent<Text>().text;
+        PhotonNetwork.JoinRoom(t_roomName);
     }
 
     public void StartGame()
