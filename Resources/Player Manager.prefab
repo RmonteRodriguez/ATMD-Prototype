@@ -576,7 +576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5783069675649360657
 Transform:
   m_ObjectHideFlags: 0
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 5467911701170921225}
   m_Layer: 0
   m_Name: Player Manager
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -817,11 +817,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545d8158bd375c542ab8e995cfe82cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   rb: {fileID: 6529019549013202383}
   cameraParent: {fileID: 810400838645585164}
   moveSpeed: 7
   maxHealth: 100
   currentHealth: 0
+  spawnPoints: {fileID: 0}
+  player: {fileID: 6529019549013202380}
+  playerLocation: {fileID: 6529019549013202381}
+  money: 0
+  HUD: {fileID: 0}
+  ShopUI: {fileID: 0}
+  pistol: {fileID: 6252851571178576461}
+  rifle: {fileID: 7689104512869271131}
+  machineGun: {fileID: 7974528700405594584}
+  hasDiffuser: 0
+  diffuserPrefab: Diffuser
 --- !u!114 &4573358273182491500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1179,7 @@ MonoBehaviour:
   bulletForce: 30
   fireRate: 1
   canShoot: 1
-  clipSizeStart: 1
+  clipSizeStart: 3
   baseReloadTime: 2
   ammoText: {fileID: 0}
 --- !u!114 &2279464926202317967
@@ -1247,7 +1259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3065134814827120980
 Transform:
   m_ObjectHideFlags: 0

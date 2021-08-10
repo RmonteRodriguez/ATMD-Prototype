@@ -74,6 +74,11 @@ public class Shooting : MonoBehaviourPunCallbacks
             photonView.RPC("Reload", RpcTarget.All);
         }
 
+        if (photonView.IsMine)
+        {
+            ammoText = GameObject.Find("HUD/Ammo/Text").GetComponent<Text>();
+        }
+
         ammoText.text = (int)currentClipSize + " / " + (int)clipSizeStart;
     }
 
