@@ -41,9 +41,12 @@ public class Player : MonoBehaviourPunCallbacks
     public GameObject rifle;
     public GameObject machineGun;
 
-    //Diffuser
-    public bool hasDiffuser;
-    public string diffuserPrefab;
+    //Teams
+    public bool isBlue;
+    public bool isRed;
+    public GameObject redChar;
+    public GameObject blueChar;
+    public GameObject noTeamChar;
 
     // Start is called before the first frame update
     void Start()
@@ -168,10 +171,18 @@ public class Player : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RifleDamage", RpcTarget.All);
         }
+    }
 
-        if (collision.gameObject.tag == "Diffuser")
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "RedTrigger")
         {
-            hasDiffuser = true;
+            photonView.RPC("JoinRedTeam", RpcTarget.All);
+        }
+
+        if (other.gameObject.tag == "BlueTrigger")
+        {
+            photonView.RPC("JoinBlueTeam", RpcTarget.All);
         }
     }
 
@@ -216,9 +227,6 @@ public class Player : MonoBehaviourPunCallbacks
         player.transform.position = spawnPoints.transform.position;
         currentHealth = maxHealth;
         RefreshHealthBar();
-
-        //manager.Spawn();
-        //PhotonNetwork.Destroy(gameObject);
     }
 
     //Purchase Weapons
@@ -249,13 +257,24 @@ public class Player : MonoBehaviourPunCallbacks
         machineGun.SetActive(true);
     }
 
+    //Teams
     [PunRPC]
-    public void DropDiffuser()
+    public void JoinRedTeam()
     {
-        if (hasDiffuser == true)
-        {
-            PhotonNetwork.Instantiate(diffuserPrefab, playerLocation.position, playerLocation.rotation);
-            hasDiffuser = false;
-        }
+        isRed = true;
+        isBlue = false;
+        redChar.SetActive(true);
+        blueChar.SetActive(false);
+        noTeamChar.SetActive(false);
+    }
+
+    [PunRPC]
+    public void JoinBlueTeam()
+    {
+        isRed = false;
+        isBlue = true;
+        redChar.SetActive(false);
+        blueChar.SetActive(true);
+        noTeamChar.SetActive(false);
     }
 }

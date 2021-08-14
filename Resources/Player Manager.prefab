@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 7134845579764541219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1045190255172874164}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3184058257721491992}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 163997250460441047}
   - component: {fileID: 18928809946215215}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Sprite (Blue Team)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 5f51afc8e1d49984cac99974a4278016, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -272,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2464747402204732064}
   - component: {fileID: 596808788622240805}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Sprite (Red Team)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: d1060e4f1a9fd0443ab69e9bc003db1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 105959216198317213}
   - component: {fileID: 2954485516680617541}
   - component: {fileID: 7638930521648449142}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 6515486423394821789}
   - component: {fileID: 3551281777362471074}
   - component: {fileID: 2174433271150376283}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CM vcam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 6409606422365228235}
   - component: {fileID: 5336640343470498687}
   - component: {fileID: 2684722722012954006}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 6529019549013202376}
   - component: {fileID: 4573358273182491500}
   - component: {fileID: 5467911701170921225}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Manager
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -832,8 +832,11 @@ MonoBehaviour:
   pistol: {fileID: 6252851571178576461}
   rifle: {fileID: 7689104512869271131}
   machineGun: {fileID: 7974528700405594584}
-  hasDiffuser: 0
-  diffuserPrefab: Diffuser
+  isBlue: 0
+  isRed: 0
+  redChar: {fileID: 4352087824717280249}
+  blueChar: {fileID: 2907396643056276162}
+  noTeamChar: {fileID: 6529019550439735060}
 --- !u!114 &4573358273182491500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,7 +886,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6529019550439735062}
   - component: {fileID: 6529019550439735061}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Sprite (No Team)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,7 +946,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: e3def471904203342960859e98bc5d8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -964,7 +967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6529019550630675681}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,7 +1002,7 @@ GameObject:
   - component: {fileID: 8635448957364598715}
   - component: {fileID: 2013594979677633908}
   - component: {fileID: 6959117055386838417}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1089,7 +1092,7 @@ GameObject:
   - component: {fileID: 2279464926202317967}
   - component: {fileID: 5933915769097297671}
   - component: {fileID: 7333983518136305444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1253,7 +1256,7 @@ GameObject:
   - component: {fileID: 4337029183499005063}
   - component: {fileID: 6315527948444896720}
   - component: {fileID: 9068354617690099346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Machine Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1412,7 +1415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8891698039065529094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1442,7 +1445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7957803862535346866}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}

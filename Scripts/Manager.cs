@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
@@ -10,19 +11,25 @@ public class Manager : MonoBehaviourPunCallbacks
     public string playerPrefab;
     public Transform spawnPoint;
 
-    //Bomb Gamemode
-    public string diffuserPrefab;
-    public Transform diffuserSpawnPoint;
+    public string timerPrefab;
+
+    //Timer
+    //public float timer;
+    //public float timeDecreasedPerSecond;
+    //public Text timerText;
 
     private void Start()
     {
         ValidateConnection();
         Spawn();
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 0)
-        {
-            SpawnDiffuser();
-        }
+        //timer = 60f;
+        //timeDecreasedPerSecond = 1f;
+    }
+
+    void Update()
+    {
+        //photonView.RPC("TimerCountdown", RpcTarget.All);
     }
 
     public void Spawn()
@@ -36,9 +43,29 @@ public class Manager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected) return;
         SceneManager.LoadScene(0);
     }
-
-    public void SpawnDiffuser()
+    /*
+    [PunRPC]
+    public void TimerCountdown()
     {
-        PhotonNetwork.Instantiate(diffuserPrefab, diffuserSpawnPoint.position, diffuserSpawnPoint.rotation);
+        timerText.text = (int)timer + " ";
+        timer -= timeDecreasedPerSecond * Time.deltaTime;
     }
+
+    /*
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+
+            stream.SendNext(timer);
+        }
+        else
+        {
+            timer = (float)stream.ReceiveNext();
+
+        }
+
+    }
+    */
 }
