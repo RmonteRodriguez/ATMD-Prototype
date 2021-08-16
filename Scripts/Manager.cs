@@ -11,25 +11,61 @@ public class Manager : MonoBehaviourPunCallbacks
     public string playerPrefab;
     public Transform spawnPoint;
 
-    public string timerPrefab;
+    public bool matchReadyToStart;
+    public bool matchStarted;
 
     //Timer
-    //public float timer;
-    //public float timeDecreasedPerSecond;
-    //public Text timerText;
+    public float timer;
+    public float initialTime;
+    public float timeDecreasedPerSecond;
+    public Text timerText;
+
+    //Team Scores
+    public float redTeamScore;
+    public float blueTeamScore;
+    public Text redText;
+    public Text blueText;
 
     private void Start()
     {
         ValidateConnection();
         Spawn();
 
-        //timer = 60f;
-        //timeDecreasedPerSecond = 1f;
+        matchReadyToStart = false;
+
+        timer = initialTime;
+        timeDecreasedPerSecond = 1f;
     }
 
     void Update()
     {
-        //photonView.RPC("TimerCountdown", RpcTarget.All);
+
+        if (matchStarted == true)
+        {
+            redText.text = (int)redTeamScore + " Pts";
+            blueText.text = (int)blueTeamScore + " Pts";
+        }
+        else
+        {
+            redText.text = " ";
+            blueText.text = " ";
+        }
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            if (matchReadyToStart == true && timer > 0)
+            {
+                photonView.RPC("TimerCountdown", RpcTarget.All);
+            }
+            else
+            {
+                timerText.text = " ";
+            }
+        }
+        else
+        {
+            timerText.text = " ";
+        }
     }
 
     public void Spawn()
@@ -43,29 +79,11 @@ public class Manager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsConnected) return;
         SceneManager.LoadScene(0);
     }
-    /*
+    
     [PunRPC]
     public void TimerCountdown()
     {
-        timerText.text = (int)timer + " ";
+        timerText.text = "Match Start: " + (int)timer;
         timer -= timeDecreasedPerSecond * Time.deltaTime;
     }
-
-    /*
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.isWriting)
-        {
-
-            stream.SendNext(timer);
-        }
-        else
-        {
-            timer = (float)stream.ReceiveNext();
-
-        }
-
-    }
-    */
 }

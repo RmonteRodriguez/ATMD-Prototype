@@ -19,7 +19,10 @@ public class Player : MonoBehaviourPunCallbacks
     public float maxHealth;
     public float currentHealth;
 
+    //SpawnPoints
     public GameObject spawnPoints;
+    public GameObject redSpawn;
+    public GameObject blueSpawn;
 
     public GameObject player;
     public Transform playerLocation;
@@ -52,6 +55,10 @@ public class Player : MonoBehaviourPunCallbacks
     void Start()
     {
         if (!photonView.IsMine) return;
+
+        //Spawnpoints
+        redSpawn = GameObject.FindGameObjectWithTag("RedSpawn");
+        blueSpawn = GameObject.FindGameObjectWithTag("BlueSpawn");
 
         cameraParent.SetActive(photonView.IsMine);
         manager = GameObject.Find("Game Manager").GetComponent<Manager>();
@@ -123,7 +130,6 @@ public class Player : MonoBehaviourPunCallbacks
             ShopUI.SetActive(false);
             shopOpen = false;
         }
-
        
         if (Input.GetKeyDown(KeyCode.Alpha1) && shopOpen == true && money > 0)
         {
@@ -142,10 +148,24 @@ public class Player : MonoBehaviourPunCallbacks
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            money = 100;
-            Death();
+            //Debug
+            manager.matchReadyToStart = true;
         }
 
+        if (manager.timer <= 0 && manager.matchStarted == false)
+        {
+            manager.matchStarted = true;
+            manager.matchReadyToStart = false;
+
+            if (isBlue)
+            {
+                player.transform.position = blueSpawn.transform.position;
+            }
+            else if (isRed)
+            {
+                player.transform.position = redSpawn.transform.position;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -183,6 +203,18 @@ public class Player : MonoBehaviourPunCallbacks
         if (other.gameObject.tag == "BlueTrigger")
         {
             photonView.RPC("JoinBlueTeam", RpcTarget.All);
+        }
+
+        if (other.gameObject.tag == "TheZone")
+        {
+            if (isBlue == true)
+            {
+                photonView.RPC("BlueScoreIncrease", RpcTarget.All);
+            }
+            else if (isRed == true)
+            {
+                photonView.RPC("RedScoreIncrease", RpcTarget.All);
+            }
         }
     }
 
@@ -223,8 +255,20 @@ public class Player : MonoBehaviourPunCallbacks
 
     public void Death()
     {
-        photonView.RPC("DropDiffuser", RpcTarget.All);
-        player.transform.position = spawnPoints.transform.position;
+        if (isBlue)
+        {
+            player.transform.position = blueSpawn.transform.position;
+            photonView.RPC("RedScoreIncrease", RpcTarget.All);
+        }
+        else if (isRed)
+        {
+            player.transform.position = redSpawn.transform.position;
+            photonView.RPC("BlueScoreIncrease", RpcTarget.All);
+        }
+        else
+        {
+            player.transform.position = spawnPoints.transform.position;
+        }
         currentHealth = maxHealth;
         RefreshHealthBar();
     }
@@ -261,8 +305,8 @@ public class Player : MonoBehaviourPunCallbacks
     [PunRPC]
     public void JoinRedTeam()
     {
-        isRed = true;
         isBlue = false;
+        isRed = true;
         redChar.SetActive(true);
         blueChar.SetActive(false);
         noTeamChar.SetActive(false);
@@ -276,5 +320,17 @@ public class Player : MonoBehaviourPunCallbacks
         redChar.SetActive(false);
         blueChar.SetActive(true);
         noTeamChar.SetActive(false);
+    }
+
+    [PunRPC]
+    public void RedScoreIncrease()
+    {
+        manager.redTeamScore++;
+    }
+
+    [PunRPC]
+    public void BlueScoreIncrease()
+    {
+        manager.blueTeamScore++;
     }
 }

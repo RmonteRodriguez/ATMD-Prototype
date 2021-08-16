@@ -824,6 +824,8 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   spawnPoints: {fileID: 0}
+  redSpawn: {fileID: 0}
+  blueSpawn: {fileID: 0}
   player: {fileID: 6529019549013202380}
   playerLocation: {fileID: 6529019549013202381}
   money: 0

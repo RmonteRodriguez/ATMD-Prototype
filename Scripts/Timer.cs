@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
             CustomeValue = new ExitGames.Client.Photon.Hashtable();
-            startTime = PhotonNetwork.time;
+            //startTime = PhotonNetwork.time;
             startTimer = true;
             CustomeValue.Add("StartTime", startTime);
             PhotonNetwork.CurrentRoom.SetCustomProperties(CustomeValue);
@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour
 
         if (!startTimer) return;
 
-        timerIncrementValue = PhotonNetwork.time - startTime;
+        //timerIncrementValue = PhotonNetwork.time - startTime;
 
         if (timerIncrementValue >= timer)
         {
